@@ -1,0 +1,14 @@
+import {useState} from "react"
+function Star() {
+    const arr = [1,2,3,4,5]
+    const [state,setState] = useState()
+    return(
+        <>
+        {arr.map((i)=>{
+            return(<><span style = {{fontSize:80,
+                                   color:i<=state?"gold":"grey"}} onClick = {()=>setState(i)}>*</span></>)
+        })}
+        </>
+    )
+}
+export default Star
