@@ -1,0 +1,28 @@
+import {useState} from "react"
+function Selection() {
+    const a = ["h1","h2","h3","h4","h5","h6","h7"]
+    const [arr,newArr] = useState([])
+    function handle(i) {
+        if(arr.includes(a[i])){
+            const og = arr.filter(item=>{
+                return item !=  a[i]})
+            newArr(og)
+        }
+        else{
+             const select = a[i]
+            newArr([...arr,select])
+        }
+     }
+    return(
+        <>
+        {a.map((item,i)=>{
+            return(<><br/><input type ="checkbox" onClick={()=>handle(i)}/>{item}</>)
+        })}
+         <h2>selected items</h2>
+            {arr.map(item=>{
+                return(<><br/>{item}</>)
+            })}
+        </>
+    )
+}
+export default Selection
