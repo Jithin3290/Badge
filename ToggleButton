@@ -1,0 +1,15 @@
+import {useState} from "react"
+function Toggle() {
+    const [show,setShow] = useState(false)
+    function handle() {
+        setShow(!show)
+    }
+    return(
+        <>
+        <button onClick = {handle}>Toggle</button>
+    <br/>
+    {show && "hello i am here"}
+        </>   
+    )
+}
+export default Toggle
