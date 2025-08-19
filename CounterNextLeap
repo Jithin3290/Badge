@@ -1,0 +1,47 @@
+import {useState,useRef} from "react"
+
+function Counter() {
+     const [num,setNum] = useState(0)
+    const intRef = useRef(null)
+    function handle(){
+        if(intRef.current){return}
+           intRef.current =  setInterval(()=>{
+      setNum(prev => {
+         const next =  Math.round((prev + 0.1) * 10) / 10 
+                if(next == 1){
+                   document.body.style.backgroundColor  = "red"
+               }
+          return next
+      })
+    },1000)
+    }
+function handle2() {
+    clearInterval(intRef.current)
+            intRef.current = null
+}
+    function handle3() {
+         setNum(0)
+        clearInterval(intRef.current)
+        intRef.current = null
+                   document.body.style.backgroundColor  = "white"
+
+            
+
+    }
+    function handle4(e) {
+        setNum(Number(e.target.value))
+    }
+    return(
+        <>
+        {num}
+        <br/>
+        <button onClick={handle} style={{color:"white",backgroundColor:"red"}}>start</button>
+         <button onClick={handle2}>stop</button>
+         <button onClick={handle3}>reset</button>
+        enter a number : <input type = "number" onChange = {(e)=>handle4(e)}/>
+
+
+        </>
+    )
+}
+export default Counter
