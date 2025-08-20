@@ -1,47 +1,45 @@
 import {useState,useRef} from "react"
+function Stop(params) {
+    const [num,setNum] = useState(0)
+    const [min,setMin] = useState(0)
 
-function Counter() {
-     const [num,setNum] = useState(0)
-    const intRef = useRef(null)
-    function handle(){
-        if(intRef.current){return}
-           intRef.current =  setInterval(()=>{
-      setNum(prev => {
-         const next =  Math.round((prev + 0.1) * 10) / 10 
-                if(next == 1){
-                   document.body.style.backgroundColor  = "red"
-               }
-          return next
-      })
-    },1000)
-    }
-function handle2() {
-    clearInterval(intRef.current)
-            intRef.current = null
-}
-    function handle3() {
-         setNum(0)
-        clearInterval(intRef.current)
-        intRef.current = null
-                   document.body.style.backgroundColor  = "white"
-
+    const watchref = useRef(null)
+    function handle() {
+        if(watchref.current){return}
+        watchref.current= setInterval(()=>{
+            setNum((prev)=>{
+                if(prev+1 === 5){
+                setMin((pr)=>pr+.5)
+                return 0
+            }
+            return prev+1})
+                
             
-
+        },1000)
+        
     }
-    function handle4(e) {
-        setNum(Number(e.target.value))
+    function handle2() {
+        clearInterval(watchref.current)
+        watchref.current = null
+        
+    }
+    function handle3() {
+        setNum(0)
+        clearInterval(watchref.current)
+        watchref.current = null
+
+        
     }
     return(
         <>
-        {num}
-        <br/>
-        <button onClick={handle} style={{color:"white",backgroundColor:"red"}}>start</button>
-         <button onClick={handle2}>stop</button>
-         <button onClick={handle3}>reset</button>
-        enter a number : <input type = "number" onChange = {(e)=>handle4(e)}/>
+            <h2>Stop Watch </h2>
+    {min}:{num}<br/>
+            <button onClick = {handle}>start</button>
+            <button onClick = {handle2}>stop</button>
+             <button onClick = {handle3}>reset</button>
 
 
         </>
     )
 }
-export default Counter
+export default Stop
