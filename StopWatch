@@ -1,0 +1,41 @@
+import {useState,useRef,useContext} from "react"
+import Alert from "./Alert"
+
+function StopWatch() {
+    const  [time,setTime] = useState(0)
+    const  [min,setMin] = useState(0)
+
+    const  Reftime = useRef(null)
+    function handle1() {
+        if(!Reftime.current){
+            Reftime.current = setInterval(()=>{
+                setTime((prev)=>{
+                    if(prev == 5){
+                        setMin((prev)=>prev+1)
+                        return 0
+                    }
+                    return prev+1
+                })
+            },1000)
+        }
+    }
+    function handle2() {
+        clearInterval(Reftime.current)
+        Reftime.current = null
+    }
+    function handle3() {
+    Reftime.current = null
+    setMin(0)
+        setTime(0)
+    }
+    return(
+        <>
+        {min}:{time}
+        <button onClick = {handle1}>start</button>
+        <button onClick = {handle2}>stop</button>
+        <button onClick = {handle3}>reset</button>
+        <Alert sec = {min}/>
+        </>
+    )
+}
+export default StopWatch
