@@ -1,33 +1,32 @@
 import React, { useState, useRef } from "react";
 
 export default function App() {
-  const [item, setItem] = useState([]);
-  const [check, setCheck] = useState(null);
+  const [item, setItem] = useState([])
+  const [check, setCheck] = useState(null)
   const [value, setValue] = useState();
   const [search, setSearch] = useState("")
-  const r = useRef();
-
+  const r = useRef()
   function handle1() {
-    const data = r.current.value;
-    setItem([...item, data]);
-    r.current.value = "";
+    const data = r.current.value
+    setItem([...item, data])
+    r.current.value = ""
   }
   function handle2(i) {
-    const newArr = [...item];
-    newArr.splice(i, 1);
-    setItem(newArr);
+    const newArr = [...item]
+    newArr.splice(i, 1)
+    setItem(newArr)
   }
   function handle3(i) {
     setCheck(i);
   }
   function handle4(i) {
-    const newArr = [...item];
-    newArr[i] = value;
-    setItem(newArr);
-    setCheck(null);
+    const newArr = [...item]
+    newArr[i] = value
+    setItem(newArr)
+    setCheck(null)
   }
 
-  const filtered = item.filter((d) => d.includes(search));
+  const filtered = item.filter((d) => d.includes(search))
 
   return (
     <div style={{ backgroundColor: "aliceblue", padding: 20, fontFamily: "Arial" }}>
