@@ -1,46 +1,44 @@
-import {useState,useRef} from "react"
-function Stop(params) {
-    const [num,setNum] = useState(0)
-    const [min,setMin] = useState(0)
+import React, { useState,useRef } from "react";
+import "./style.css";
 
-    const watchref = useRef(null)
-    function handle() {
-        if(watchref.current){return}
-        watchref.current= setInterval(()=>{
-            setNum((prev)=>{
-                if(prev+1 === 60){
-                setMin((pr)=>pr+1)
-                return 0
-            }
-            return prev+1})
-                
-            
-        },1000)
-        
-    }
-    function handle2() {
-        clearInterval(watchref.current)
-        watchref.current = null
-        
-    }
-    function handle3() {
-        setNum(0)
-        setMin(0)
-        clearInterval(watchref.current)
-        watchref.current = null
+export default function App() {
+  const [data, setData] = useState(0);
+  const [min , setMin] = useState(0)
+  const dataRef = useRef(null)
+  function handleStart(){
+    if(!dataRef.current){
+    dataRef.current = setInterval(()=>{
+      setData((prev)=>{
+      if(prev+1 === 5)
+      {
+        setMin((pre)=>pre+1)
+        return 0
+      }
+      return prev+1
+    })
+    },[1000])}
+  }
+  function handleStop(){
+    clearInterval(dataRef.current)
+    dataRef.current = null
 
-        
-    }
-    return(
-        <>
-            <h2>Stop Watch </h2>
-    {min}:{num}<br/>
-            <button onClick = {handle}>start</button>
-            <button onClick = {handle2}>stop</button>
-             <button onClick = {handle3}>reset</button>
-
-
-        </>
-    )
+  }
+  function handleReset(){
+    clearInterval(dataRef.current)
+    dataRef.current = null
+    setData(0)
+    setMin(0)
+  }
+  return (
+    <div style = {{padding:10,backgroundColor:"skyblue"}}>
+      <h1>Counter app </h1>
+      {min}:{data}
+      <br/>
+      <div style={{display:"flex",gap:10}}>
+      <button onClick = {handleStart} style={{backgroundColor:"green",color:"white"}}> start</button>
+      <button onClick = {handleStop} style={{backgroundColor:"red",color:"white"}}>stop </button>
+      <button onClick = {handleReset}style={{backgroundColor:"blue",color:"white"}}>reset</button>
+      </div>
+    </div>
+  );
 }
-export default Stop
