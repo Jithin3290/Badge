@@ -1,110 +1,57 @@
-import React, { useState, useRef } from "react";
+import React, { useState,useRef } from "react";
+import "./style.css";
 
 export default function App() {
-  const [item, setItem] = useState([])
-  const [check, setCheck] = useState(null)
-  const [value, setValue] = useState();
-  const [search, setSearch] = useState("")
-  const r = useRef()
-  function handle1() {
-    const data = r.current.value
-    setItem([...item, data])
-    r.current.value = ""
+  const [data, setData] = useState();
+  const [list, setList] = useState([]);
+  const [edit,setEdit] = useState(null)
+  const [search,setSearch] = useState([])
+  const dataRef = useRef()
+  function handleAdd(){
+    const value = dataRef.current.value
+    setList([...list,value])
+    dataRef.current.value = ""
   }
-  function handle2(i) {
-    const newArr = [...item]
-    newArr.splice(i, 1)
-    setItem(newArr)
+  function handleDelete(i){
+    const newArr = [...list]
+    newArr.splice(i,1)
+    setList(newArr)
   }
-  function handle3(i) {
-    setCheck(i);
+  function handleEdit(i){
+    setEdit(i)
   }
-  function handle4(i) {
-    const newArr = [...item]
-    newArr[i] = value
-    setItem(newArr)
-    setCheck(null)
+  function handleSave(i){
+    const newArray = [...list]
+    newArray.splice(i,1,data)
+    setList(newArray)
+    setEdit(null)
   }
-
-  const filtered = item.filter((d) => d.includes(search))
-
+  function handleSearch(e){
+    const s = e.target.value
+    const newArr = list.filter(item=>{
+      return item === s
+    })
+    setSearch(newArr)
+    }
   return (
-    <div style={{ backgroundColor: "aliceblue", padding: 20, fontFamily: "Arial" }}>
-      <h1 style={{ textAlign: "center", color: "#333" }}>Todo List</h1>
+    <div><>
+      <h1>TODO</h1>
+      <input type = "text" ref = {dataRef}/><button onClick = {handleAdd}>Add</button>
+      <br/><input type = "text" placeholder="search" onChange={(e)=>handleSearch(e)}/>
 
-      <div style={{ marginBottom: 10 }}>
-        <input
-          type="text"
-          ref={r}
-          style={{ padding: 5, borderRadius: 5, border: "1px solid #333", marginRight: 5 }}
-        />
-        <button
-          onClick={handle1}
-          style={{ padding: 5, borderRadius: 5, border: "1px solid red"}}
-        >
-          Add
-        </button>
-      </div>
-
-      <div style={{ marginBottom: 20 }}>
-        <input
-          type="text"
-          placeholder="Search..."
-          onChange={(e) => setSearch(e.target.value)}
-          style={{ padding: 5, borderRadius: 5, border: "1px solid #333" }}
-        />
-      </div>
-
-      <ul style={{ padding: 0 }}>
-        {filtered.map((data, i) => (
-          <li
-            key={i}
-            style={{
-              listStyle: "none",
-              padding: 10,
-              marginBottom: 10,
-              backgroundColor: "#fff",
-              borderRadius: 5,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <span>{i}: {data}</span>
-
-            <div>
-              <button
-                onClick={() => handle2(i)}
-                style={{ padding: 5, borderRadius: 5, border: "1px solid red", marginRight: 5, cursor: "pointer" }}
-              >
-                Remove
-              </button>
-              <button
-                onClick={() => handle3(i)}
-                style={{ padding: 5, borderRadius: 5, border: "1px solid red", cursor: "pointer" }}
-              >
-                Edit
-              </button>
-            </div>
-
-            {check === i && (
-              <div style={{ marginLeft: 10 }}>
-                <input
-                  type="text"
-                  onChange={(e) => setValue(e.target.value)}
-                  style={{ padding: 5, borderRadius: 5, border: "1px solid #333", marginRight: 5 }}
-                />
-                <button
-                  onClick={() => handle4(i)}
-                  style={{ padding: 5, borderRadius: 5, border: "1px solid green", cursor: "pointer" }}
-                >
-                  Save
-                </button>
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
+      {list.map((item,i)=>{
+        return (<><li key={i}>{item}
+        <button onClick={()=>handleDelete(i)}> delete</button>
+        <button onClick={()=>handleEdit(i)}> edit</button>
+        {edit==i && <><input type="text" onChange={(e)=>setData(e.target.value)}/><button
+         onClick={()=>handleSave(i)}>save</button></>}
+        </li></>)
+      })}
+      <h3>searched item</h3>
+      {search.map((item,i)=>{
+        return(<li key={i}>{item}</li>)
+      })}
+      </>
     </div>
   );
 }
