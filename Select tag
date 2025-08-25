@@ -1,0 +1,43 @@
+import React, { useState } from "react";
+import "./style.css";
+
+export default function App() {
+  const [data, setData] = useState([]);
+  const arr = ["h1", "h2", "h3", "h4"];
+  const [btn,setBtn] = useState(false)
+  function handleSelect(selectedValues) {
+    
+    if(data.includes(selectedValues)){
+      const newArr = data.filter((item,index)=>{
+        return item != selectedValues
+      })
+      setData(newArr)
+    }
+    else{
+      setData([...data,selectedValues])
+    }
+  }
+
+  return (
+    <div>
+      <h1>Dropdown List</h1>
+      <button onClick = {()=>setBtn(!btn)}>select option</button>
+      {btn && 
+      <>
+      <br/>
+      <select  multiple onChange={(e)=>handleSelect(e.target.value)} style = {{width :50}}>
+        {arr.map((item, i) => {
+          return(<><input type = "checkbox"/><option key = {i}>{item}</option></>)
+        })}
+      </select>
+      </>
+}
+      <h2>Selected List</h2>
+      <ul>
+        {data.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
