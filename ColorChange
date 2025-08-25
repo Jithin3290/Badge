@@ -1,18 +1,33 @@
-import {useState,useRef} from "react"
-function Colorchange(params) {
-    const arr = ["red","green","yellow","blue","white"]
-    const [color,setColor] = useState()
-    const d = useRef()
-    function handle1(i) {
-        d.current.style.backgroundColor = arr[i]
-    }
-    return(
-        <>
-        {arr.map((item,i)=>{
-            return(<button onClick = {()=>handle1(i)} style={{backgroundColor:item,padding:10,margin:10}}>{item}</button>)
-        })}
-        <div style={{height:150,width:"vw"}} ref = {d}/>
-        </>
-    )
+import React, { useState,useRef } from "react";
+import "./style.css";
+
+export default function App() {
+  const [color, setColor] = useState(0);
+  const [prev, setPrev] = useState([]);
+
+  const arr = ["red","blue","green","orange","grey"]
+  const colorRef = useRef()
+  const colorRef2 = useRef()
+
+  function handleClick(i){
+    colorRef.current.style.backgroundColor = arr[i]
+    setPrev([...prev,arr[i]])
+  }
+  function handlePrev(){
+    colorRef2.current.style.backgroundColor=prev.at(-2)
+    prev.pop()
+  }
+  return (
+    <div >
+      <div style={{display:"flex",justifyContent:"space-around"}}>
+     {arr.map((item,i)=>{
+       return(<div onClick = {()=>handleClick(i)} style={{border:"2px solid black",backgroundColor:item}}>{item}</div>)
+     })}
+     </div>
+     <div ref={colorRef} style={{height:50,width:"vw",backgroundColor:"white"}}></div>
+     <button onClick={handlePrev}>previous</button>
+     <div ref={colorRef2} style={{height:50,width:"vw",backgroundColor:"white"}}></div>
+
+    </div>
+  );
 }
-export default Colorchange
