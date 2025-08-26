@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./style.css"
 
-export default function App() {
+export default  function App() {
   const [data, setData] = useState([]);
   const arr = ["h1", "h2", "h3", "h4"];
   const [btn,setBtn] = useState(false)
