@@ -27,7 +27,7 @@ export default function App() {
       <br/>
       <select  multiple onChange={(e)=>handleSelect(e.target.value)} style = {{width :50}}>
         {arr.map((item, i) => {
-          return(<><input type = "checkbox"/><option key = {i}>{item}</option></>)
+          return(<><option key = {i}>{item}</option></>)
         })}
       </select>
       </>
