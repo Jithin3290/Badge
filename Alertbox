@@ -1,4 +1,4 @@
-import {useEffect} from "react
+import {useEffect} from "react"
 function Alert({sec}) {
     useEffect(()=>{
          if(sec === 2){
